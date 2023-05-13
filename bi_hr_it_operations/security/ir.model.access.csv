@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_my_equipment_request,access.my.equipment.request,bi_hr_it_operations.model_my_equipment_request,,1,1,1,1
+access_damage_details,access.damage.details,bi_hr_it_operations.model_damage_details,,1,1,1,1
+access_equipment_request,access.equipment.request,bi_hr_it_operations.model_equipment_request,,1,1,1,1

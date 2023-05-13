@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    
+    <!-- Kanban View -->
+    <record id="hr_department_kanban_view" model="ir.ui.view">
+        <field name="name">hr.department.kanban.view</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.hr_department_view_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="total_employees"/>
+            </xpath>
+            <xpath expr="//div[@class='o_kanban_card_header_title']//div[@class='o_primary']" position="after">
+                <div class="o_secondary"><b>(<field name="total_employees"/>)</b></div>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- Tree View -->
+    <record id="hr_department_tree_view" model="ir.ui.view">
+        <field name="name">hr.department.tree.view</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.view_department_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='display_name']" position="after">
+                <field name="total_employees"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

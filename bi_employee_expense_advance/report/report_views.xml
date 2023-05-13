@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="report_ADVANCE_EXPENCE_print"
+            string="Advance Expense"
+            model="advance.expense"
+
+            report_type="qweb-pdf"
+            file="bi_employee_expense_advance.report_advance_expense" 
+            name="bi_employee_expense_advance.report_advance_expense" 
+            
+        />
+        
+         
+    </data>
+</odoo>

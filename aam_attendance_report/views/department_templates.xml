@@ -1,0 +1,46 @@
+<odoo>
+    <data>
+        <template id="print_department_attendance_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+
+                    <table class="table table-condensed" style="font-size:12px">
+
+                        <tr>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>Worked Hours</th>
+                        </tr>
+
+                        <tr t-foreach="lists" t-as="l">
+                            <tr t-foreach="l" t-as="t">
+
+                                <td>
+                                    <span t-esc="t.get('attendance_date')"/>
+                                </td>
+                                <td>
+                                    <span t-esc="t.get('employee_name')"/>
+                                </td>
+                                <td>
+                                    <span t-esc="t.get('check_in')"/>
+                                </td>
+                                <td>
+                                    <span t-esc="t.get('check_out')"/>
+                                </td>
+                                <td>
+                                    <span t-esc="t.get('worked_hours')"/>
+                                </td>
+                            </tr>
+                        </tr>
+                    </table>
+
+
+                </t>
+            </t>
+        </template>
+
+
+    </data>
+</odoo>

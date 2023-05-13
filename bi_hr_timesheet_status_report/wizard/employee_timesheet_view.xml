@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+	<record id="bi_view_employee_timesheet" model="ir.ui.view">
+            <field name="name">Employee Timesheet Report</field>
+            <field name="model">employee.timesheet.report</field>
+            <field name="arch" type="xml">
+                <form string="Timesheet Report">
+                    <p class="oe_grey">
+                        
+                    </p>
+                    <group>
+                    	<group>
+                        <field name="start_date"/>
+                       	</group>
+                       	<group>
+                       		<field name="end_date"/>
+                       	</group>
+                    </group>
+                    <notebook>
+                    	<page string="Employees">
+                    		<field name="employee_ids"/>
+                    		
+                            
+                    	</page>
+                    </notebook>
+                    <footer>
+                        <button name="print_pdf_report" string="Print" type="object"
+                            class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_bi_employee_timesheet" model="ir.actions.act_window">
+            <field name="name">Employee Timesheet Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">employee.timesheet.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_print_employee_timesheet" name="Hr Timesheet Status Report" action="action_bi_employee_timesheet"
+                  parent="hr_timesheet.menu_timesheets_reports"/>
+</odoo>

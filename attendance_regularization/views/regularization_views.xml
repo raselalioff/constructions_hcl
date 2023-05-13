@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_attendance_tree111" model="ir.ui.view">
+            <field name="name">hr.attendance_tree</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+            <field name="arch" type="xml">
+                <field name="worked_hours" position="after">
+                    <field name="comment"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_regular_tree1" model="ir.ui.view">
+            <field name="name">attendance.regular_tree</field>
+            <field name="model">attendance.regular</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Manual Attendance">
+                    <field name="employee_id"/>
+                    <field name="reg_category"/>
+                    <field name="from_date"/>
+                    <field name="reg_reason"/>
+                    <field name="to_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_view_manual_attendance1">
+            <field name="name">Manual Attendance Request</field>
+            <field name="res_model">attendance.regular</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="oe_view_no_content_create">Create new Request
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="regular_onsight" name="Manual Attendance" parent="hr_attendance.menu_hr_attendance_root"
+                  sequence="15" groups="base.group_user" action="action_view_manual_attendance1"/>
+        <record id="view_regular_approve_tree" model="ir.ui.view">
+            <field name="name">attendance.regular_request_tree</field>
+            <field name="model">attendance.regular</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Approve Manual Attendance">
+                    <field name="employee_id"/>
+                    <field name="reg_category"/>
+                    <field name="from_date"/>
+                    <field name="reg_reason"/>
+                    <field name="to_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="attendance_regular11" model="ir.ui.view">
+            <field name="name">attend.regular</field>
+            <field name="model">attendance.regular</field>
+            <field name="arch" type="xml">
+                <form string="Manual Attendance">
+                    <header>
+                        <button name="submit_reg" string="Submit" type="object" class="btn-primary"
+                                attrs="{'invisible': [('state_select','not in','draft')]}"/>
+                        <button name="regular_approval" type="object" string="Approve" class="oe_highlight"
+                                groups="hr_attendance.group_hr_attendance_manager"
+                                attrs="{'invisible': [('state_select','not in','requested')]}"/>
+                        <button name="regular_rejection" type="object" string="Reject" class="oe_highlight"
+                                groups="hr_attendance.group_hr_attendance_manager"
+                                attrs="{'invisible': [('state_select','not in','requested')]}"/>
+                        <field name="state_select" widget="statusbar" statusbar_visible="draft,requested,approved"/>
+                    </header>
+                    <sheet>
+                        <group col="4" colspan="4">
+                            <field name="reg_category" attrs="{'readonly':[('state_select','=','approved')]}"/>
+                            <field name="from_date" attrs="{'readonly':[('state_select','=','approved')]}"/>
+                            <field name="reg_reason" attrs="{'readonly':[('state_select','=','approved')]}"/>
+                            <field name="to_date" attrs="{'readonly':[('state_select','=','approved')]}"/>
+                            <field name="employee_id" attrs="{'readonly':[('state_select','=','approved')]}"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_view_request_manual_attendance">
+            <field name="name">Manual Attendance Approval</field>
+            <field name="res_model">attendance.regular</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state_select','!=','approved'),('state_select','!=','reject')]</field>
+            <field name="help" type="html">
+                <p class="oe_view_no_content_create">Create new Record
+                </p>
+            </field>
+        </record>
+        <menuitem id="approving_regular"
+                  name="Manual Attendance Approval"
+                  parent="hr_attendance.menu_hr_attendance_manage_attendances"
+                  sequence="25"
+                  action="action_view_request_manual_attendance"
+                  groups="hr_attendance.group_hr_attendance_manager"/>
+    </data>
+</odoo>

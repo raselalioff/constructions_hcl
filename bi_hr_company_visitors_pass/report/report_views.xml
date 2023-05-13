@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="report_visitor_pass"
+            string="Visitor Pass"
+            model="visitor.pass" 
+            report_type="qweb-pdf"
+            file="bi_hr_company_visitors_pass.report_visitor" 
+            name="bi_hr_company_visitors_pass.report_visitor" 
+            attachment="(object.name + '_Visitor.pdf')"
+        />
+        
+         
+    </data>
+</odoo>

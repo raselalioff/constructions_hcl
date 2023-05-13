@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="department_attendance_report_form">
+            <field name="name">department.attendance.report.form</field>
+            <field name="model">department.attendance.report</field>
+            <field name="arch" type="xml">
+                <form string="Report">
+                     <field name="departmentwise_attendance_report_printed" invisible="1"/>
+
+                        <group attrs="{'invisible':[('departmentwise_attendance_report_printed','=',True)]}">
+                            <group>
+                                <field name="from_date" required="1" style="width:250px;"/>
+                                <field name="to_date" required="1" style="width:250px;"/>
+
+                            </group>
+                            <group>
+                                <field name="department_id" widget="many2many_tags"/>
+                            </group>
+                        </group>
+
+
+                    <group attrs="{'invisible':[('departmentwise_attendance_report_printed','=',False)]}">
+	                	    <field name="file_name" invisible="1"/>
+	                		<field name="departmentwise_attendance_summary_file" readonly="1"  filename="file_name"/>
+                    </group>
+
+                    <footer>
+                        <button string='Generate Excel' name="generate_excel"
+	                	type="object" class="btn-primary" attrs="{'invisible':[('departmentwise_attendance_report_printed','=',True)]}"/>
+
+                        <button name="print_report" string='Generate PDF' type="object"
+                                class="btn btn-success highlight" attrs="{'invisible':[('departmentwise_attendance_report_printed','=',True)]}"/>
+                        <button string="Close" class="btn-primary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="department_attendance_report_action_window">
+            <field name="name">Department Attendance Report</field>
+            <field name="res_model">department.attendance.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_hr_attendance_manage_report_department_" name="Department Attendance Report"
+                  parent="hr_attendance.menu_hr_attendance_report" action="department_attendance_report_action_window"
+                  sequence="101"/>
+
+    </data>
+</odoo>

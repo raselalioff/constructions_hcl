@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_timesheet_report,access.employee.timesheet.report,model_employee_timesheet_report,,1,1,1,1
+access_incomplete_timesheet,access.incomplete.timesheet,model_incomplete_timesheet,,1,1,1,1
+

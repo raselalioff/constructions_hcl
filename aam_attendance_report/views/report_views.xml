@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <report id="report_hr_attendance"
+                model="attendance.report"
+                string="Print Attendance Report"
+                name="aam_attendance_report.print_attendance_report_template"
+                file="aam_attendance_report.print_attendance_report_template"
+                report_type="qweb-pdf"
+                menu="False"
+        />
+
+        <report id="report_hr_attendance_summary"
+                model="employee.attendance.summary"
+                string="Print Summary Attendance Report"
+                name="aam_attendance_report.print_attendance_report_template_summary"
+                file="aam_attendance_report.print_attendance_report_template_summary"
+                report_type="qweb-pdf"
+                menu="False"
+        />
+
+        <report id="report_hr_attendance_summary_evaluation"
+                model="employee.attendance.summary"
+                string="Print Summary Attendance Report"
+                name="aam_attendance_report.print_report_hr_attendance_summary_evaluation"
+                file="aam_attendance_report.print_report_hr_attendance_summary_evaluation"
+                report_type="qweb-pdf"
+                menu="False"
+        />
+
+    </data>
+
+    <data>
+        <record model="ir.cron" id="ir_cron_auto_update_hr_attendance">
+            <field name="name">Auto Update Attendance Records</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="active" eval="False"/>
+            <field name="model_id" ref="model_hr_attendance"/>
+            <field name="state">code</field>
+            <field name="code">model.auto_update_attendance_record()</field>
+        </record>
+    </data>
+</odoo>

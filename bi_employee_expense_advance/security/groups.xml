@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="hr_advance_expence_manager_id" model="res.groups">
+		<field name="name">HR Manager (Advance Expence)</field>
+		<field name="category_id" ref="base.module_category_hidden"/>
+		
+		
+	</record>
+
+	<record id="hr_advance_expence_account_manager_id" model="res.groups">
+		<field name="name">Account Manager (Advance Expence)</field>
+		<field name="category_id" ref="base.module_category_hidden"/>
+		<field name="implied_ids" eval="[(4,ref('hr_advance_expence_manager_id'))]"/>
+		
+		
+	</record>
+</odoo>

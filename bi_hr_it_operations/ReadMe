@@ -1,0 +1,11 @@
+=> 14.0.0.0: migrate bi_hr_it_operations in v14
+=> 14.0.0.1: added chatter for my.equipment.request model
+=> 14.0.0.2 : generate expense button improvement + damage_ids onchange improvement + user_id +
+              company field  improvement + chatter added for expense +refuse and reject button improvement
+            - added fields in view + report [refused_date, refused_by,rejected_date, rejected_by]
+            - fixed the bug for HR approve button confirmation
+
+=> 14.0.0.3 : Improved an index as per latest improvements.
+
+=> 14.0.0.4: (22/10/2022)
+    -- Get an error expense_created related while creating record solved it. 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    
+    <!-- Search View -->
+    <record id="project_project_search_view" model="ir.ui.view">
+        <field name="name">project.project.search.view</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_project_filter"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="office_employee_id" string="Project Manager Employee ID"/>
+                    <field name="department_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Department of Project Manager" name="Department" context="{'group_by': 'department_id'}"/>
+                    </group>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+
+    <!-- Form View -->
+    <record id="project_project_form_view" model="ir.ui.view">
+        <field name="name">project.project.form.view</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="office_employee_id" readonly="True"/>
+                    <field name="department_id" readonly="True"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+</odoo>

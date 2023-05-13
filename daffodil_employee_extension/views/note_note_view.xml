@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    
+    <!-- Search View -->
+    <record id="note_note_search_view" model="ir.ui.view">
+        <field name="name">note.note.search.view</field>
+        <field name="model">note.note</field>
+        <field name="inherit_id" ref="note.view_note_note_filter"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='memo']" position="after">
+                    <field name="office_employee_id"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+
+    <!-- Tree View -->
+    <record id="note_note_tree_view" model="ir.ui.view">
+        <field name="name">note.note.tree.view</field>
+        <field name="model">note.note</field>
+        <field name="inherit_id" ref="bi_odoo_job_costing_management.inherit_view_note_note_tree"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='responsible_user']" position="after">
+                    <field name="office_employee_id" readonly="True"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+
+    <!-- Form View -->
+    <record id="note_note_form_view" model="ir.ui.view">
+        <field name="name">note.note.form.view</field>
+        <field name="model">note.note</field>
+        <field name="inherit_id" ref="bi_odoo_job_costing_management.bi_view_note_note_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='responsible_user']" position="after">
+                    <field name="office_employee_id" readonly="True"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+</odoo>

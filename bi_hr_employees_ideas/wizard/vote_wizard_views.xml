@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_vote_employee" model="ir.ui.view">
+            <field name="name">Employee Vote</field>
+            <field name="model">employee.votes.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Vote">
+               
+                 <group string="Rating">
+                  	<h2> <field name="rating" widget="priority"/></h2>
+                 </group>
+               	<group string="Comments">
+                 <h2>  <field name="comments"/></h2>
+                 </group>
+                 <group string="Department">
+                 	<group>
+                   <field name="department_id"/>
+                    </group>
+                 </group>
+            
+                    <footer>
+                        <button name="save_vote" string="Save" type="object"
+                            class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer> 
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_vote_employee" model="ir.actions.act_window">
+            <field name="name">Employee Vote</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">employee.votes.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+
+</odoo>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    
+    <!-- Search Filter -->
+    <record id="hr_employee_search_filter" model="ir.ui.view">
+        <field name="name">hr.employee.search.filter</field>
+        <field name="model">hr.employee</field>
+        <field name="priority" eval="7" />
+        <field name="inherit_id" ref="hr.view_employee_filter" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="employee_id" string="Employee ID" filter_domain="[('employee_id','ilike',self)]" />
+                </xpath>
+            </data>
+        </field>
+    </record>
+    
+    
+    <!-- Form View -->
+    <record id="hr_employee_form_view" model="ir.ui.view">
+        <field name="name">hr.employee.form.view</field>
+        <field name="model">hr.employee</field>
+        <field name="priority" eval="7" />
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+            <data>
+                
+                <xpath expr="//header" position="inside">
+                    <button type="object"
+                            string="Assign All Employee ID to Partner"
+                            name="action_assign_employee_id_to_partner" invisible="1" />
+                </xpath>
+
+                <xpath expr="//field[@name='department_id']" position="before">
+                    <field name="employee_id" />
+                </xpath>
+
+            </data>
+        </field>
+    </record>
+
+
+    <!-- Kanban View -->
+    <record id="hr_employee_kanban_view" model="ir.ui.view">
+        <field name="name">hr.employee.kanban.view</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_ids']" position="after">
+                <span t-if="record.employee_id.raw_value"><i class="fa fa-id-card"/> <field name="employee_id"/></span>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- Tree View -->
+    <record id="hr_employee_tree_view" model="ir.ui.view">
+        <field name="name">hr.employee.tree.view</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="employee_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

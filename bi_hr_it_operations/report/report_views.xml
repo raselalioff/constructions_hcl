@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="bi_hr_it_operations.report_equipment_print" model="ir.actions.report">
+		<field name="name">Equipment Request</field>
+		<field name="model">my.equipment.request</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">bi_hr_it_operations.report_equipment</field>
+		<field name="report_file">bi_hr_it_operations.report_equipment</field>
+		<field name="binding_model_id" ref="model_my_equipment_request"/>
+		<field name="binding_type">report</field>  
+	</record>
+</odoo>

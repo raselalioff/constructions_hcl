@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="report_incomplete_template">
+			<t t-call="web.external_layout">
+				<t t-set="doc" t-value="doc.with_context({})" />
+				<div class="page">
+					<br/>
+					<br/>
+					<h2 class="text-center">Employee Incomplete Timesheet Report</h2>
+					<!-- <div class="text-center" >
+          					<h3>   <p>    Start date:
+                				<span>
+                        	 	<t t-esc="doc.start_date"/>
+                				</span> 	</p>
+                				<p>    </p>
+               				 <p>
+               			 End date:
+               			 <span>
+                    		     <t t-esc="doc.end_date"/>
+               			 </span> 
+
+                
+                 		</p></h3>
+          		  </div> -->
+
+          		   <br/>
+                <table class="table table-condensed">
+                            <tr>
+                            
+                            <th style="border: 0px ;" class="text-left"> Start date: <span t-esc="doc.start_date"/></th>
+                            
+                             <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                             <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                             <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                             <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                             <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                            
+                            <th style="border: 0px ;" class="text-left">End date: <span t-esc="doc.end_date"/></th>
+                            
+                        </tr>
+                </table>
+
+					
+                <br/>
+                <br/>
+               
+
+            	<table class="table table-condensed">
+							<thead style="border: 5px solid #ddd;">
+								<tr class="text-center">
+									<th>Employee</th>
+									<th>Manager</th>
+									<th>Working Hours</th>
+									<th>Timesheet Hours</th>
+									<th>Missing Timesheet Hours</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="text-center" t-foreach="doc.incomplete_ids" t-as="line">
+
+										<td>
+											<span t-esc="line.employee_id.name" />
+										</td>
+										<td>
+											<span t-esc="line.employee_id.parent_id.name" />
+										</td>
+										<td>
+											<span t-esc="line.working_hours" />
+										</td>
+										<td >
+											<span t-esc="line.timesheet_hours" />
+										</td>
+										<td >
+											<span t-esc="line.missing_hours" />
+										</td>
+										
+								</tr>
+							</tbody>
+						</table>
+                
+
+				</div>
+			</t>
+		</template>
+
+		<template id="report_incomplete">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="doc">
+					<t t-call="bi_hr_timesheet_status_report.report_incomplete_template"  />
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	
+
+
+			<report 
+            string="Work Order summary" 
+            id="action_report_work_order_summary" 
+            model="wizard.wo.summary" 
+            report_type="qweb-pdf"
+            name="pragtech_contracting.report_workorder_summary" 
+            file="pragtech_contracting.report_workorder_summary" 
+        />
+        
+        
+        
+        
+        
+        <record id="summary_landscape" model="report.paperformat">
+			<field name="name">RaBill Summary</field> 
+			<field name="default" eval="True"/> 
+			<field name="format">A4</field> 
+			<field name="orientation">Landscape</field>
+			<field name="margin_top">40</field>
+			<field name="margin_bottom">20</field> 
+			<field name="margin_left">7</field> 
+			<field name="margin_right">7</field> 
+			<field name="header_line" eval="False"/> 
+			<field name="header_spacing">35</field> 
+			<field name="dpi">90</field> 
+			
+		</record>
+		 <report 
+            string="RaBill Summary" 
+            id="action_report_ra_bill_summary" 
+            model="wizard.rabill.summary" 
+            report_type="qweb-pdf"
+            name="pragtech_contracting.report_rabill_summary" 
+            file="pragtech_contracting.report_rabill_summary" 
+            paperformat="pragtech_contracting.summary_landscape"
+        />
+		
+		
+		 <report 
+            string="Incomplete Work Order" 
+            id="action_report_incomplete_wo" 
+            model="wizard.incomplete.wo" 
+            report_type="qweb-pdf"
+            name="pragtech_contracting.report_incomplete_workorder_summary" 
+            file="pragtech_contracting.report_incomplete_workorder_summary" 
+        />
+        
+       
+        <report 
+            string="Contractor Payment Report" 
+            id="action_report_contractor_payment" 
+            model="wizard.contractor.payment" 
+            report_type="qweb-pdf"
+            name="pragtech_contracting.report_contractor_payment" 
+            file="pragtech_contracting.report_contractor_payment" 
+        />
+         
+        <report 
+            string="Unbilled GRN Report" 
+            id="action_report_grn" 
+            model="wizard.grn.report" 
+            report_type="qweb-pdf"
+            name="pragtech_contracting.report_grn" 
+            file="pragtech_contracting.report_grn" 
+        /> 
+        
+        
+        
+        
+        </data>
+        </odoo>

@@ -1,0 +1,179 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+
+<record id="view_advance_expence_req_tree" model="ir.ui.view">
+	   <field name="name">advance.expense.tree</field>
+	   <field name="model">advance.expense</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <tree string="Advance Expense">
+	     <field name="name"/>
+	     <field  name="employee_id"/>
+	     <field name="department_id"/>
+	     <field name='confirm_by'/>
+	      <field  name="confirm_date"/>
+
+	      <field name="approve_by"/>
+	     <field name='approve_date'/>
+	      <field  name="paid_by"/>
+	      <field  name="paid_date"/>
+	     
+	     
+			     
+	    </tree>
+	   </field>
+        </record>
+
+
+
+		<record id="seq_advance" model="ir.sequence">
+            <field name="name">expense_sequencer</field>
+            <field name="code">advance.expense</field>
+            <field name="prefix">ADV-EXP/</field>
+            <field name="padding">4</field>
+        </record>
+
+
+
+	
+
+
+        <record id="view_advance_expence_req_form" model="ir.ui.view">
+	   <field name="name">advance.expense.form</field>
+	   <field name="model">advance.expense</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <form string="Advance Expense">
+	    	 <header>
+	    		
+                <button name="action_confirm" string="Confirm"
+                    	type="object" states="draft" class="btn-primary"/>
+                <button name="action_approve" string="Approve"
+                    	type="object" states="confirmed" class="btn-primary" groups="bi_employee_expense_advance.hr_advance_expence_manager_id" />
+                <button name="action_pay" string="Pay"
+                    	type="object" states="approve" class="btn-primary" groups="bi_employee_expense_advance.hr_advance_expence_account_manager_id"/>
+                <button name="action_done" string="Done"
+                    	type="object" states="paid" class="btn-primary"/>
+                
+                <!-- <button name="return_from_trip" string="Return"
+                    	type="object" states="approved"/>
+                <button name="action_create_expence" string="Create Expenses"
+                    	type="object" states="returned"/>
+                <button name="action_draft" string="Reset To Draft"
+                    	type="object" states="returned,submitted"/> -->
+	    		<field name="state" widget="statusbar" statusbar_visible="draft,confirmed,approve,paid,done"/>
+	    	</header>
+	    	<sheet>
+	    		<h2><field name='name'/></h2>
+	    		<div class="oe_button_box">
+	    		<button name="action_jounral" type="object"  class="oe_stat_button" icon="fa-archive"
+	    			 attrs = "{'invisible':[('state','not in',['paid','done'])]}" >
+                      <strong>Journal</strong>
+                </button>
+           		 </div>
+	    	<group>
+	    		<group>
+	    			<field  name="employee_id" attrs = "{'readonly':[('state','not in',['draft'])]}"/>
+	    		</group>
+		    	
+	    		<group></group>
+	    		<group>
+	     			<field name="department_id" attrs = "{'readonly':[('state','not in',['draft'])]}"/>
+	     			
+	     			<field name="req_date" attrs = "{'readonly':[('state','not in',['draft'])]}"/>
+	     			<field name='req_amount' attrs = "{'readonly':[('state','not in',['draft'])]}"/>
+	     			<field name="currency_id" attrs = "{'readonly':[('state','not in',['draft'])]}"/>
+	    		</group>
+	    		<group>
+	     			<field name="job_id" attrs = "{'readonly':[('state','not in',['draft'])]}"/>
+	     			
+	     			<field name="req_user_id" attrs = "{'readonly':[('state','not in',['draft'])]}"/>
+	     			
+	    		</group>
+	    	</group>
+	    	<notebook>
+	    		<page string="Advance Expense Lines">
+	    			<field name="expense_ids" attrs = "{'readonly':[('state','not in',['draft'])]}"/>
+	    		</page>
+	    		<page string="General Information">
+	    		<group>
+	    			<group>
+	     			<field name="confirm_date"/>
+	     			
+	     			<field name="approve_date"/>
+	     			<field name="paid_date"/>
+	     			
+	    			</group>
+
+	    			<group>
+	     			<field name="confirm_by"/>
+	     			
+	     			<field name="approve_by"/>
+	     			<field name="paid_by"/>
+	     			
+	    			</group>
+	    		</group>	
+				</page>	
+	    		<page string="Accounting Info">
+	    			<group>
+	    				<group>
+	    					<field name="partner_id" attrs = "{'readonly':[('state','not in',['approve'])],'required' : [('state','=','approve')]}"/>
+	    					<field name="payment_method_id" attrs = "{'readonly':[('state','not in',['approve'])],'required' : [('state','=','approve')]}" />
+	    					<field name="employee_account_id" attrs = "{'readonly':[('state','not in',['approve'])],'required' : [('state','=','approve')]}" />
+	    					<field name="account_move_id" />
+	    					<field name="paid_ammount"/>
+	    				</group>
+	    			</group>
+	    		</page>
+	    			
+			</notebook>	   
+			<group string="Reason For Advance">
+				<field name="reason" attrs = "{'readonly':[('state','not in',['draft'])]}"/>
+			</group>  
+			<group string="Comment">
+				<field name="comment" attrs = "{'readonly':[('state','not in',['draft'])]}"/>
+			</group>  
+	     </sheet>
+	 </form>
+	</field>
+
+
+</record>
+	  <record id="advance_expence_req_action" model="ir.actions.act_window">
+	  <field name="name">Advance Expense</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">advance.expense</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record>
+
+
+	
+	<menuitem  id="sub_menu_advance_expense" parent="hr_expense.menu_hr_expense_root" name="Advance Expense" sequence="20" />
+	<menuitem action="advance_expence_req_action" id="menu_advance_expense" parent="sub_menu_advance_expense" name="Advance Expense Request" sequence="29"/>
+
+
+	
+	  <record id="advance_expence_req_action_hr" model="ir.actions.act_window">
+	  <field name="name">Advance To Approve</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">advance.expense</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="domain">[('state','in',['confirmed','approve','paid'])]</field>
+	  <field name="help" type="html">
+
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record>
+
+
+
+<menuitem action="advance_expence_req_action_hr" id="menu_advance_approve" parent="sub_menu_advance_expense" name="Advance To Approve" sequence="30" groups="hr_advance_expence_manager_id"/>
+
+
+
+</odoo>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="report_equipment_template">
+			<t t-call="web.external_layout">
+				<t t-set="doc" t-value="doc.with_context({})" />
+				<div class="page">
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					
+					<h2 style="text-align: center;font-style:normal;">
+						<span t-field="doc.employee_id.name"/> - <span t-field="doc.state"/>
+					</h2>
+
+
+                    <br/>
+                    <br/>
+               
+					<table style="border-collapse: collapse;width: 100%;" class="table table-condensed">
+                    <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;height:50%;">
+                        <td><strong >Created Date :</strong> </td>
+                        <td><span t-field="doc.create_date"/></td>
+
+                        <td><strong >Created By :</strong> </td>
+                        <td><span t-field="doc.create_by_id.name" /></td>
+                                       
+                    </tr>
+                    
+                    <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+                    	<td><strong >Modified Date: </strong> </td>
+                        <td><span t-field="doc.modified_date" /></td>
+
+                        <td><strong >Modified By : </strong> </td>
+                        <td><span t-field="doc.modified_by_id.name" /></td>
+                          
+                    </tr>
+                    <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+
+                    	<td><strong >Validate Date:</strong> </td>
+                        <td><span t-field="doc.validate_date" /></td>
+
+                        <td><strong >Validate By : </strong> </td>
+                        <td><span t-field="doc.validate_by_id.name" /></td>
+                        
+                    </tr>
+
+                    <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+
+                        <td><strong >Approved Date:</strong> </td>
+                        <td><span t-field="doc.approved_date" /></td>
+
+                        <td><strong >Approved By : </strong> </td>
+                        <td><span t-field="doc.approved_by_id.name" /></td>
+                        
+                    </tr>
+					<t t-if="doc.rejected_by_id">
+						<tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+							<td><strong >Rejected Date:</strong> </td>
+							<td><span t-field="doc.rejected_date" /></td>
+
+							<td><strong >Rejected By : </strong> </td>
+							<td><span t-field="doc.rejected_by_id.name" /></td>
+
+						</tr>
+					</t>
+					<t t-if="doc.refused_by_id">
+						<tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+
+							<td><strong >Refused Date:</strong> </td>
+							<td><span t-field="doc.refused_date" /></td>
+
+							<td><strong >Refused By : </strong> </td>
+							<td><span t-field="doc.refused_by_id.name" /></td>
+
+						</tr>
+					</t>
+                </table>
+                <br/>
+            	<br/>
+                
+                <h2>Request Equipments</h2>
+            	<table class="table table-condensed">
+							<thead style="border: 2px solid #ddd;">
+								<tr class="text-center">
+									<th>Product</th>
+									<th>Description</th>
+									<th>Quantity</th>
+									<th>Unit of Measure</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<tr t-foreach="doc.request_equipment_ids" t-as="line" style="border-bottoms: 1px solid #ddd;" class="text-center">
+
+										<td>
+											<span t-esc="line.product_id.name" />
+										</td>
+										<td>
+											<span t-esc="line.name" />
+										</td>
+										<td>
+											<span t-esc="line.product_qty" />
+										</td>
+										<td >
+											<span t-esc="line.product_unit.id" />
+										</td>
+								</tr>
+							</tbody>
+						</table>
+                <br/>
+                <br/>
+					<t t-if="doc.description">
+						<h2>Request Description </h2>
+						<table style="border-collapse: collapse;width: 100%;" class="table table-condensed">
+							<tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;border-bottom: 1px solid #ddd;height:50%;">
+								<td><span t-field="doc.description"/></td>
+							</tr>
+						</table>
+					</t>
+				</div>
+			</t>
+		</template>
+
+		<template id="report_equipment">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="doc">
+					<t t-call="bi_hr_it_operations.report_equipment_template"/>
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>

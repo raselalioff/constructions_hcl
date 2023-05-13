@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+<record id="expense_form_view_inherit" model="ir.ui.view">
+            <field name="name">hr.expense.form.inherite</field>
+            <field name="model">hr.expense</field>
+            <field name="priority" eval="8" />
+            <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='tax_ids']" position="after">
+                    <field name="expence_advance_id"/>
+                    <field name="advance_amount"/>
+                </xpath>
+
+
+        </field>
+        </record>
+
+
+<record id="expense_sheet_form_view_inherit" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.form.inherite</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="priority" eval="8" />
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='expense_line_ids']/tree/field[@name='name']" position="after">
+                    <field name="expence_advance_id"/>
+                    <field name="advance_amount"/>
+                </xpath>
+
+
+        </field>
+        </record>
+
+
+
+
+</odoo>

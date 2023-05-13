@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_equipment_department_manager_ids" model="res.groups">
+		<field name="name">Department Manager It Operation(HR)</field>
+		<field name="category_id" ref="base.module_category_hidden"/>	
+	</record>
+	<record id="hr_equipment_manager_id" model="res.groups">
+		<field name="name">HR Manager Operation(HR)</field>
+		<field name="category_id" ref="base.module_category_hidden"/>
+		<field name="implied_ids" eval="[(4,ref('hr_equipment_department_manager_ids'))]"/>
+		
+	</record>	
+</odoo>

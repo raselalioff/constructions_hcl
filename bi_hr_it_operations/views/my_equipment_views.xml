@@ -1,0 +1,225 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+	<record id="view_equipment_req_tree" model="ir.ui.view">
+	   <field name="name">my.equipment.request.tree</field>
+	   <field name="model">my.equipment.request</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+			<tree string="My Equipment Request">
+				<field name="request_for"/>
+				<field name="employee_id"/>
+				<field name="job_id"/>
+				<field name="user_id"/>
+				<field name="cpmpany_id"/>
+				<field name="description"/>
+				<field name="damage"/>		 
+			</tree>
+	   	</field>
+	</record> 
+
+		<record id="view_equipment_req_form" model="ir.ui.view">
+	   	<field name="name">my.equipment.request.form</field>
+	   	<field name="model">my.equipment.request</field>
+	   	<field name="arch" type="xml">
+		<form string="My Equipment Request" >
+			<header>
+				
+				<button name="action_confirm" string="Confirm"
+						type="object" states="draft" class="btn-primary"/>
+
+				<button name="action_approve_dept" string="Deparment Approve"
+						type="object" states="waiting_approve" class="btn-primary" groups="bi_hr_it_operations.hr_equipment_department_manager_ids"/>
+
+				<button name="action_approve_hr" string="HR Approve"
+						attrs= "{'invisible' : ['|',('expense_created','=',True),('state','!=','dept_approve')]}"
+						confirm="Are You Sure ? After approved you cannot able to generate an expense"
+						type="object" class="btn-primary" groups="bi_hr_it_operations.hr_equipment_manager_id"/>
+
+				<!--This button is for without confirmation , if expenses already created then this button is visible-->
+				<button name="action_approve_hr" string="HR Approve"
+						attrs= "{'invisible' : ['|',('expense_created','!=',True),('state','!=','dept_approve')]}"
+						type="object" class="btn-primary" groups="bi_hr_it_operations.hr_equipment_manager_id"/>
+				<button name="create_internal_transfer" string="Create Internal Transfer"
+						type="object" states="hr_approve" class="btn-primary" groups="stock.group_stock_manager"/>
+
+				<button name="action_view_expenses" string="View Expenses"
+						type="object" states="hr_approve" class="btn-primary" groups="bi_hr_it_operations.hr_equipment_manager_id"/>
+
+				<button name="action_view_picking" string="View Internal Transfer"
+						type="object" states="assigned" class="btn-primary" groups="stock.group_stock_manager"/>
+
+				<button name="action_reject" string="Reject" groups="bi_hr_it_operations.hr_equipment_department_manager_ids"
+						type="object" states="waiting_approve" class="btn-primary"/>
+
+				<button name="action_refused" string="Refused" groups="bi_hr_it_operations.hr_equipment_manager_id"
+                    	type="object" states="dept_approve" class="btn-primary"/>
+
+				 <button name="action_set_to_draft" string="Reset to Draft"
+                    	type="object" states="refused,reject" class="btn-primary"/>
+
+
+				<button name="action_expence" string="Generate Expense" groups="bi_hr_it_operations.hr_equipment_manager_id"
+						context="{'is_damage_ids': True}"
+						type="object" states="dept_approve" class="btn-primary"
+						 attrs= "{'invisible' : ['|',('expense_created','=',True),('state','!=','dept_approve')]}"/>
+
+
+				<field name="state" widget="statusbar" statusbar_visible="draft,waiting_approve,dept_approve,hr_approve,assigned,refused,reject"/>
+			</header>
+		 	<sheet> 
+				<group>
+		 			<group >
+						<field name="request_for" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+						<field name="expense_created" invisible="1"/>
+		 			</group>
+		 			<group>    
+						<field name="employee_id" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+						<field name="job_id" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+						<field name="department_id" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+						<field name="user_id" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+						<field name="cpmpany_id" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+						<field name="damage" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+						<field name="location_id" attrs= "{'invisible' : [('state','!=','hr_approve')],
+													'required' : [('state','=','hr_approve')]}"/>
+					</group>
+				</group>
+				<notebook>
+					<page string="Request Equipment">
+						<field name="request_equipment_ids" attrs= "{'readonly' : [('state','!=','draft'),]}">
+							<tree editable='bottom'>
+								<field name="product_id"/>
+								<field name="name"/>
+								<field name="product_qty"/>
+								<field name="product_unit"/>
+							</tree>
+						</field>
+					</page>
+					<page string="Damage Details">
+						<field name="damage_details_ids" attrs= "{'readonly' : [('state','in',['hr_approve','assigned'])]}">
+							<tree editable='bottom'>
+								<field name="expense_line_created" invisible="1"/>
+								<field name="product_id" attrs= "{'readonly' : [('expense_line_created','=',True)]}"/>
+								<field name="unit_price" attrs= "{'readonly' : [('expense_line_created','=',True)]}"/>
+								<field name="product_qty" attrs= "{'readonly' : [('expense_line_created','=',True)]}"/>
+								<field name="note" attrs= "{'readonly' : [('expense_line_created','=',True)]}"/>
+							</tree>
+						</field>
+					</page>
+					<page string="Internal Transfer">
+						<field name="picking_ids">
+							
+						</field>
+					</page>
+					<page string="Expenses">
+						<field name="expense_ids">
+							<tree editable='bottom'>
+								<field name="date"/>
+								<field name="name"/>
+								<field name="employee_id"/>
+								<field name="total_amount" sum="Total"/>
+								<field name="state" string="Status"/>
+							</tree>
+						</field>
+					</page>
+					<page string="Extra Information">
+						<group>
+							<group>
+								<field name="create_date" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+								<field name="modified_date" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+								<field name="validate_date" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+								<field name="approved_date" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+								<field name="rejected_date" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+								<field name="refused_date" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+							</group>
+							<group>
+								<field name="create_by_id" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+								<field name="modified_by_id" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+								<field name="validate_by_id" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+								<field name="approved_by_id" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+								<field name="rejected_by_id" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+								<field name="refused_by_id" attrs= "{'readonly' : [('state','!=','draft'),]}"/>
+							</group>
+						</group>
+							
+					</page>
+				</notebook>
+
+				<group string='Request Description'>
+					<field name="description"/>
+				</group>
+
+			</sheet>
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="activity_ids" widget="mail_activity"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+		</form> 
+	   </field> 
+	</record> 
+
+	<record id="action_equipment_req" model="ir.actions.act_window">
+	  <field name="name">My Equipment Request</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">my.equipment.request</field>
+	  <field name="binding_view_types">form</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record>
+
+	<menuitem id ="main_menu_equipment" sequence="30" name="Equipments"/>
+	<menuitem id ="sub_menu_equipment" sequence="25" name="Equipments" parent="main_menu_equipment"/>
+	<menuitem action="action_equipment_req" id="menu_my_equipment" parent="sub_menu_equipment" name="My Equipment Request" sequence="30"/>
+
+	<record id="action_equipment_req_hr" model="ir.actions.act_window">
+	  <field name="name">HR Equipment Request</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">my.equipment.request</field>
+	  <field name="binding_view_types">form</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="domain">[('state','in',['hr_approve','dept_approve'])]</field>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record>
+
+	<menuitem action="action_equipment_req_hr" id="menu_my_equipment_hr" parent="sub_menu_equipment" name="HR Equipment Request" sequence="30" groups="hr_equipment_manager_id"/>
+
+	<record id="action_equipment_req_dept" model="ir.actions.act_window">
+	  <field name="name">Department Equipment Request</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">my.equipment.request</field>
+	  <field name="binding_view_types">form</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="domain">[('state','in',['dept_approve','waiting_approve'])]</field>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record>
+
+
+	<menuitem action="action_equipment_req_dept" id="menu_my_equipment_dept" parent="sub_menu_equipment" name="Department Equipment Request" sequence="30" groups="hr_equipment_department_manager_ids"/>
+
+
+	<record id="action_equipment_req_stock" model="ir.actions.act_window">
+	  <field name="name">Stock Equipment Request</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">my.equipment.request</field>
+	  <field name="binding_view_types">form</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="domain">[('state','in',['hr_approve','assigned'])]</field>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record>
+
+
+	<menuitem action="action_equipment_req_stock" id="menu_my_equipment_stock" parent="sub_menu_equipment" name="Stock Equipment Request" sequence="30" groups="stock.group_stock_manager"/>
+	
+</odoo>

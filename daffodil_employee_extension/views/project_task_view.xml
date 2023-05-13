@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    
+    <!-- Search View -->
+    <record id="project_task_search_view" model="ir.ui.view">
+        <field name="name">project.task.search.view</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="office_employee_id"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+
+    <!-- Tree View -->
+    <!-- <record id="project_task_tree_view" model="ir.ui.view">
+        <field name="name">project.task.tree.view</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="office_employee_id" readonly="True"/>
+                </xpath>
+            </data>
+        </field>
+    </record> -->
+
+
+    <!-- Form View -->
+    <record id="project_task_form_view" model="ir.ui.view">
+        <field name="name">project.task.form.view</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="office_employee_id" readonly="True"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+</odoo>

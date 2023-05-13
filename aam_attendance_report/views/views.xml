@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="attendance_report_form">
+            <field name="name">attendance.report.form</field>
+            <field name="model">attendance.report</field>
+            <field name="arch" type="xml">
+                <form string="Report">
+                    <group>
+                        <group>
+                            <field name="report_type"/>
+                            <field name="employee_id" attrs="{'invisible':[('report_type','=','department')], 'required':[('report_type','!=','department')]}"/>
+                            <field name="department_id" style="width:250px;" widget="many2many_tags" attrs="{'invisible':[('report_type','!=','department')], 'required':[('report_type','=','department')]}"/>
+                        </group>
+                        <group attrs="{'invisible':[('report_type','!=','evaluation')]}">
+                            <field name="date_type_selection"/>
+                            <label for="month" string="Month From"/>
+                            <div>
+                                <field name="month" placeholder="From" class="oe_inline"/>
+                                <span>, </span>
+                                <field name="year" placeholder="To" class="oe_inline"/>
+                            </div>
+                            <label for="to_month" string="Month To"/>
+                            <div>
+                                <field name="to_month" placeholder="From" class="oe_inline"/>
+                                <span>, </span>
+                                <field name="to_year" placeholder="To" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group attrs="{'invisible':[('report_type','=','evaluation')]}">
+                            <field name="date_type_selection"/>
+                            <label for="month" string="Month"/>
+                            <div>
+                                <field name="month" placeholder="From" class="oe_inline"/>
+                                <span>, </span>
+                                <field name="year" placeholder="To" class="oe_inline"/>
+                            </div>
+                        </group>
+
+                    </group>
+
+                    <footer>
+                        <button name="print_report" string='Generate PDF' type="object"
+                                class="btn btn-success highlight"/>
+                        <button string="Close" class="btn-primary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="attendance_report_action_window">
+            <field name="name">Attendance Report</field>
+            <field name="res_model">attendance.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_hr_attendance_manage_report" name="Attendance Report"
+                  parent="hr_attendance.menu_hr_attendance_report" action="attendance_report_action_window"
+                  sequence="100"/>
+
+
+
+    </data>
+</odoo>

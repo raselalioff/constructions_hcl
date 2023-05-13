@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_idea,access.employee.idea,bi_hr_employees_ideas.model_idea_type,,1,1,1,1
+access_hr_idea_type,access.employee.idea.type,bi_hr_employees_ideas.model_employee_idea,,1,1,1,1
+access_hr_idea_type_vote,access.employee.idea.type.vote,bi_hr_employees_ideas.model_employee_votes,,1,1,1,1
+access_hr_idea_type_vote_wizard,access.employee.idea.vote.wizard,bi_hr_employees_ideas.model_employee_votes_wizard,,1,1,1,1

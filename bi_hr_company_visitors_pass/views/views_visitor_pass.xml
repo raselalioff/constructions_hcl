@@ -1,0 +1,105 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+
+<record id="view_visitor_pass_tree" model="ir.ui.view">
+	   <field name="name">visitor.pass.tree</field>
+	   <field name="model">visitor.pass</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <tree string="Visitor Pass">
+	     <field name="visitor_name"/>
+	     <field  name="phone_number"/>
+	     <field name="reasone"/>
+	     <field name='email'/>
+	     <field  name="visitor_company"/>
+	      <field  name="time_in"/>
+	      <field  name="time_out"/>
+	      <field  name="employee_id"/>
+	      <field  name="created_by_id"/>
+	      <field  name="company_id"/>   
+	    </tree>
+	   </field>
+        </record>
+
+
+
+        <record id="seq_visitor" model="ir.sequence">
+            <field name="name">visitor_sequencer</field>
+            <field name="code">visitor.pass</field>
+            <field name="prefix">VI/</field>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="view_visitor_pass_form" model="ir.ui.view">
+	   <field name="name">visitor.pass.form</field>
+	   <field name="model">visitor.pass</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <form string="Visitor">	    	 
+	    	<header>
+                <button name="confirm_visitor" string="Confirm"
+                    	type="object" states="draft"/>
+
+                <button name="exit_visitor" string="Exit"
+                    	type="object" states="confirm"/>
+
+                <button name="print_report" string="Print"
+                    	type="object" states="confirm,exit"/>
+
+	    		<field name="state" widget="statusbar" statusbar_visible="draft,confirm,exit"/>
+
+	    	</header>
+	    	<sheet>
+	    		
+	    		<h2><field name="name"/></h2>
+		    	<group string="Visitor Information">
+		    		<group>
+	     				<field name="visitor_name" attrs="{'readonly' : [('state','!=','draft')]}"/>
+	     				<field  name="phone_number" attrs="{'readonly' : [('state','!=','draft')]}"/>
+	     				<field name="reasone" attrs="{'readonly' : [('state','!=','draft')]}"/>
+	     			</group>
+	     			<group>
+	     				<field name='email' attrs="{'readonly' : [('state','!=','draft')]}"/>
+	     			 	<field  name="visitor_company" attrs="{'readonly' : [('state','!=','draft')]}" />
+	     			</group>
+	    		</group>
+
+	    		<group>
+	    		<group string ="In Out Details" >
+	     			<field  name="time_in" attrs="{'readonly' : [('state','!=','draft')]}" />
+	     			<field  name="time_out" attrs="{'readonly' : [('state','!=','draft')]}"/>
+	    		</group>
+
+
+	    		<group string ="Contact Information" cols="6">
+	     			<field name="employee_id" attrs="{'readonly' : [('state','!=','draft')]}"/>
+	     			<field name="department_id" attrs="{'readonly' : [('state','!=','draft')]}"/>
+	     			<field  name="created_by_id" attrs="{'readonly' : [('state','!=','draft')]}"/>
+	      			<field  name="company_id" attrs="{'readonly' : [('state','!=','draft')]}"/>
+	    		</group>
+	    	</group>
+	    	
+	    		
+	    		  
+	     </sheet>
+	 </form>
+	</field>
+</record>
+	  <record id="visitor_pass_action" model="ir.actions.act_window">
+	  <field name="name">Visitor Pass</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">visitor.pass</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record>
+
+
+	<menuitem  id="main_menu_visitor"  name="Visitors" sequence="20" />
+	<menuitem  id="sub_menu_visitor" parent="main_menu_visitor" name="Company Visitors" sequence="20" />
+	<menuitem action="visitor_pass_action" id="menu_company_visitors" parent="sub_menu_visitor" name="Visitors" sequence="29" />
+
+
+</odoo>

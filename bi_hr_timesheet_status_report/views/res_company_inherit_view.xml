@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_timesheet_to_comapny_inherit" model="ir.ui.view">
+            <field name="name">res.comapny.form.inherite</field>
+            <field name="model">res.company</field>
+            <field name="priority" eval="8" />
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[1]" position="after">
+                    <page string="Timesheet Status Followers">
+                    	<group>
+                    		<field name="res_users_ids" widget="many2many_tags"/>
+                    	</group>
+                   </page>
+
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

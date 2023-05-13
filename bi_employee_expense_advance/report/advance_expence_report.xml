@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="report_advance_expense_template">
+			<t t-call="web.external_layout">
+				<t t-set="doc" t-value="doc.with_context({})" />
+				<div class="page">
+                    
+                    <br/><br/><br/>
+                    
+					<h2><b>Advance Expense - <span t-field="doc.name"/>  <span t-field="doc.state"/></b></h2>
+
+                    <h2> <span t-field="doc.req_user_id.name" /> - <span t-field="doc.state"/> </h2>
+
+                    <br/><br/><br/>
+
+					<table style="border-collapse: collapse;width: 100%;" class="table table-condensed">
+                        <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;height:50%;">
+                            <td><strong >Department</strong> </td>
+                            <td><span t-field="doc.department_id.name"/></td>
+                            <td><strong >Job Title</strong> </td>
+                            <td><span t-field="doc.job_id.name"/></td>
+                        </tr>
+                        <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+                        	<td><strong >Request Date</strong> </td>
+                            <td><span t-field="doc.req_date" /></td>
+                            <td><strong >Request User</strong> </td>
+                            <td><span t-field="doc.req_user_id.name" /></td>
+                        </tr>
+                        <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+                        	<td><strong >Requested Amount</strong> </td>
+                            <td><span t-field="doc.req_amount" /></td>
+                        </tr>
+                    </table>
+                    <br/>
+
+                    <h2><b>General Information</b></h2>
+                    
+                	<table style="border-collapse: collapse;width: 100%;" class="table table-condensed">
+                        <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;height:50%;">
+                            <td><strong >Confirmed Date</strong> </td>
+                            <td><span t-field="doc.confirm_date"/></td>
+                            <td><strong >Confirmed By</strong> </td>
+                            <td><span t-field="doc.confirm_by.name"/></td>
+                        </tr>
+                        <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+                        	<td><strong >Approve Date</strong> </td>
+                            <td><span t-field="doc.approve_date" /></td>
+                            <td><strong >Approve By</strong> </td>
+                            <td><span t-field="doc.approve_by.name" /></td>
+                        </tr>
+                        <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+                        	<td><strong>Paid Date</strong> </td>
+                            <td><span t-field="doc.paid_date" /></td>
+                            <td><strong >Paid By</strong> </td>
+                            <td><span t-field="doc.paid_by.name" /></td>
+                        </tr> 
+                    </table>
+                    <br/>
+
+                </div>
+                <div class="page">
+                    <div style="page-break-after:always;"/>
+                    <br/><br/>
+
+                     <h2><b>Advance Payment Request</b></h2>
+
+                     <table class="table table-condensed">
+    					<thead style="border: 5px solid #ddd;">
+    						<tr class="text-center">
+    							<th>Exoense</th>
+    							<th>Description</th>
+    							<th>Unit Price</th>
+    							<th>Quantity</th>
+                                <th>Unit Of Measure</th>
+    							<th>Sub Total</th>
+    						</tr>
+    					</thead>
+    					<tbody>
+    						<tr t-foreach="doc.expense_ids" t-as="line" class="text-center">
+    							<td><span t-esc="line.product_id.name" /></td>
+    							<td><span t-esc="line.name" /></td>
+    							<td><span t-esc="line.unit_amount" /></td>
+    							<td ><span t-esc="line.quantity" /></td>
+                                <td ><span t-esc="line.product_id.uom_id.name" /></td>
+    							<td ><span t-esc="line.total_amount" /></td>
+    						</tr>
+    					</tbody>
+    				</table>
+    				<br/>
+
+    				<h2><b>Accounting Information</b></h2>
+
+    				<table style="border-collapse: collapse;width: 100%;" class="table table-condensed">
+                        <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;height:50%;">
+                            <td><strong >Employee Account</strong> </td>
+                            <td><span t-field="doc.partner_id.name"/></td>
+                            <td><strong >Payment Method</strong> </td>
+                            <td><span t-field="doc.payment_method_id.name"/></td>
+                        </tr>
+                        
+                        <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+                        	<td><strong >Asset Account</strong> </td>
+                            <td><span t-field="doc.employee_account_id.name" /></td>
+                            <td><strong >Paid Amount</strong> </td>
+                            <td><span t-field="doc.paid_ammount" /></td>  
+                        </tr>
+                    </table>
+                    <br/>
+                    <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                    <h5><b>Reason For Advance : </b></h5>
+                    <h5><span t-field="doc.reason"/></h5>
+                    <h5><b>Comment</b></h5>
+                    <h5><span t-field="doc.comment"/></h5>
+
+                    <h5><b>Requester signature:___________________ </b>    </h5>
+                    <br/>
+                    <h5><b>Approver signature:____________________</b></h5>
+
+				</div>
+			</t>
+		</template>
+
+		<template id="report_advance_expense">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="doc">
+					<t t-call="bi_employee_expense_advance.report_advance_expense_template"  />
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>

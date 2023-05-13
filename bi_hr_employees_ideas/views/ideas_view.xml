@@ -1,0 +1,108 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+
+	<record id="view_employee_idea_tree" model="ir.ui.view">
+	   	<field name="name">employee.idea.tree</field>
+	   	<field name="model">employee.idea</field>
+	   	<field name="priority">2</field>
+	   	<field name="arch" type="xml">
+	   	 	<tree string="Idea">
+	   	 	 	<field name="name"/>
+	   	 	 	<field  name="employee_id"/>
+	   	 	 	<field name="create_date"/>
+	   	 	 	<field name='deadline_date'/>
+	   	 	 	<field  name="company_id"/>
+	   	 	 	<field name="department_id"/>
+	   	 	 	<field  name="idea_type_id"/>	     
+	    	</tree>
+	   	</field>
+    </record>
+
+    <record id="seq_idea" model="ir.sequence">
+        <field name="name">idea_sequencer</field>
+        <field name="code">employee.idea</field>
+        <field name="prefix">IDEA</field>
+        <field name="padding">3</field>
+    </record>
+
+    <record id="view_employee_idea_form" model="ir.ui.view">
+	   	<field name="name">employee.idea.form</field>
+	   	<field name="model">employee.idea</field>
+	   	<field name="priority">2</field>
+	   	<field name="arch" type="xml">
+	   	<form string="Idea">
+	    	 
+	    	<header>
+	    		<button name="%(action_view_vote_employee)d" string="Vote"
+                    	type="action" class="btn-primary" states="approved"/>
+                <button name="post_idea" string="Post Idea"
+                    	type="object" states="new"/>
+                <button name="approve_idea" string="Approve" groups="hr.group_hr_manager"
+                    	type="object" states="waiting"/>
+                <button name="refuse_idea" string="Reject" groups="hr.group_hr_manager"
+                    	type="object"  states="waiting"/>
+                 <button name="close_idea" string="Close" groups="hr.group_hr_manager"
+                    	type="object"  states="approved"/>
+	    		<field name="state" widget="statusbar" statusbar_visible="new,waiting,approved,close"/>
+	    	</header>
+	    	<sheet>
+	    		<h2><field name="idea_seq"/></h2>
+	    		<div class="oe_button_box">
+	    		<button name="action_votes" type="object"  class="oe_stat_button" icon="fa-archive"
+	    			 attrs = "{'invisible':[('state','not in',['approved','close'])]}" >
+                      <field name="count_votes" string="Votes" widget="statinfo" />
+                </button>
+           		 </div>
+	    		<group >
+	    			
+	    		<field name="name"/>
+	    		</group>
+	    		<group>
+		    	<group>
+	     			<field  name="employee_id"/>
+	    			<field name="create_date"/>
+	    			<field name='deadline_date'/>
+	    		</group>
+	    		<group>
+	    			<field  name="company_id"/>
+	    			<field  name="idea_type_id"/>
+	    			<field name="department_id"/>
+	    		</group>
+	    		</group>
+	    		<notebook>
+	    			<page string="Details">
+	    				<field  name="details"/>
+					</page>	
+	    			<page string="Employee Votes">
+	    				<field name="employee_votes_ids">
+	    					<tree>
+	    						<field name="employee_id"/>
+	    						<field name="department_id"/>
+	    						<field name="comments"/>
+	    						<field name="rating"/>
+	    					</tree>
+	    				</field>
+	    			</page>
+	    			
+				</notebook>	     
+	     </sheet>
+	 </form>
+	</field>
+</record>
+	  
+	<record id="employee_idea_action" model="ir.actions.act_window">
+	  	<field name="name">Idea</field>
+	  	<field name="type">ir.actions.act_window</field>
+	  	<field name="res_model">employee.idea</field>
+	  	<field name="view_mode">tree,form,kanban</field>
+	  	<field name="help" type="html">
+	  	 	<p class="oe_view_nocontent_create"> </p>
+	  	 	<p></p>
+	  	</field>
+	</record>
+
+	<menuitem id="main_menu_employee_idea" name="Idea" sequence="25" />
+	<menuitem  id="sub_menu_employee_idea" parent="main_menu_employee_idea" name="Employee Ideas" sequence="20" />
+	<menuitem action="employee_idea_action" id="menu_employee_idea" parent="sub_menu_employee_idea" name="Idea" sequence="29"/>
+
+</odoo>
